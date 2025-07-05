@@ -1,0 +1,71 @@
+import { getConnection } from 'config/database';
+import { RowDataPacket, FieldPacket } from 'mysql2'; // Don't forget to import these types if you're using mysql2
+
+const getAllUsers = async () => {
+    const connection = await getConnection();
+    try {
+        const sql = 'SELECT * FROM `User`'
+        const [results, fields] = await connection.execute(sql)
+        return results
+    }
+    catch (err) {
+        console.log(err);
+        return []
+    }
+}
+
+
+const handleCreateUser = async (
+    name: string,
+    email: string,
+    address: string) => {
+    const connection = await getConnection();
+    try {
+        const sql = 'INSERT INTO `User`(`name`, `email`, `address`) VALUES (?, ?, ?)';
+        const values = [name, email, address];
+        const [results, fields] = (await connection.execute(sql, values));
+        return results
+    } catch (err) {
+        console.log(err);
+    }
+
+}
+
+const handleDeleteUser = async (id: string) => {
+    const connection = await getConnection();
+    try {
+        const sql = 'DELETE FROM `User` WHERE `id` = ? LIMIT 1';
+        const [result, fields] = await connection.execute(sql, [id]);
+        return result;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const handleViewUser = async (id:string) => {
+    const connection = await getConnection();
+    try{
+        const sql = 'SELECT * FROM `User` WHERE `id` = ?';
+        const value = [id];
+        const [result,fields] = await connection.execute(sql, value) as [RowDataPacket[], FieldPacket[]]
+        return result[0]
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+const handleUpdateUser = async (id: string, name: string, email: string, address: string) => {
+    const connection = await getConnection();
+    try{
+        const sql = 'UPDATE `User` SET `name` = ?, `email` = ?, `address` = ? WHERE `id` = ?';
+        const value = [name, email, address, id];
+        await connection.execute(sql, value)
+    }
+    catch(err){
+        console.log(err);
+        
+    }
+}
+
+export { handleCreateUser, getAllUsers, handleDeleteUser, handleViewUser, handleUpdateUser }
