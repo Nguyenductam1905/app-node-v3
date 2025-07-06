@@ -2,6 +2,7 @@ import express from "express"
 import "dotenv/config"
 import path from "path"
 import { webRoutes } from "routes/web"
+import initDatabase from "config/seed"
 
 const app = express()
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 
 
 console.log(path.resolve())
+initDatabase()
 //Route..
 webRoutes(app)
 

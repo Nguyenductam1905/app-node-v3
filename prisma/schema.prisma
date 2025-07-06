@@ -15,8 +15,44 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name    String?   @db.VarChar(255)
-  email   String?   @db.VarChar(255)
-  address  String?   @db.VarChar(255)
+ id          Int    @id @default(autoincrement())
+ username    String @db.VarChar(255)
+ address     String @db.VarChar(255)
+ password    String @db.VarChar(255)
+ fullName    String @db.VarChar(255)
+ phone       String @db.VarChar(255)
+ accountType String @db.VarChar(50)
+ avatar      String @db.VarChar(255)
+
+
+ @@map("users")
+}
+
+
+model Oder {
+ id         Int @id @default(autoincrement())
+ totalPrice Int
+ @@map("orders")
+}
+
+
+model Product {
+ id         Int     @id @default(autoincrement())
+ name       String  @db.VarChar(255)
+ price      Int
+ image      String? @db.VarChar(255)
+ detailDesc String  @db.VarChar(255)
+ shortDesc  String  @db.VarChar(255)
+ factory    String  @db.VarChar(255)
+ quantity   Int
+ target     String  @db.VarChar(255)
+ sold       Int     @default(0)
+ @@map("products")
+}
+
+model Role {
+ id          Int     @id @default(autoincrement())
+ name        String  @db.VarChar(255)
+ description String? @db.VarChar(255)
+ @@map("roles")
 }

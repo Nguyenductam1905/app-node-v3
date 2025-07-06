@@ -1,5 +1,6 @@
 import express from "express";
-import { getHomePage, getCreateUserPage, postCreateUser, postDeleteUser, getViewUserById, postUpdateUser } from "controllers/user.controller";
+import { getHomePage, postCreateUser, postDeleteUser, getViewUserById, postUpdateUser } from "controllers/user.controller";
+import { getDashboardPage, getAdminUserPage, getAdminProductPage, getAdminOrderPage, getCreateUserPage} from "controllers/admin/dashboard.controller";
 
 const router = express.Router()
 
@@ -16,6 +17,16 @@ export const webRoutes = (app: express.Application) => {
     router.get("/view-user/:id", getViewUserById)
 
     router.post("/handle-update-user/:id", postUpdateUser)
+
+    router.get("/admin", getDashboardPage)
+
+    router.get("/admin/user", getAdminUserPage)
+
+    router.get("/admin/product", getAdminProductPage)
+
+    router.get("/admin/order", getAdminOrderPage)
+
+    router.get("/admin/user/create", getCreateUserPage)
 
     app.use("/", router)
 

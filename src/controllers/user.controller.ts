@@ -3,18 +3,15 @@ import { getAllUsers, handleCreateUser, handleDeleteUser, handleViewUser, handle
 
 
 
-const getHomePage = async (req:Request, res:Response) => {
+const getHomePage = async (req: Request, res: Response) => {
    const users = await getAllUsers()
-   res.render('home.ejs', {users: users})
+   res.render('home.ejs', { users: users })
 }
 
-const getCreateUserPage = (req:Request, res:Response) => {
-   res.render("create-user")
-}
 
-const postCreateUser = async (req:Request, res:Response) => {
+const postCreateUser = async (req: Request, res: Response) => {
    const info = req.body
-   const {name, email, address} = info
+   const { name, email, address } = info
    await handleCreateUser(name, email, address)
    res.redirect("/")
 }
@@ -28,15 +25,15 @@ const postDeleteUser = async (req: Request, res: Response) => {
 const getViewUserById = async (req: Request, res: Response) => {
    const idUser = req.params.id
    const user = await handleViewUser(idUser)
-   res.render("view-user", {user: user})
+   res.render("view-user", { user: user })
 }
 
 const postUpdateUser = async (req: Request, res: Response) => {
    const user = req.body
    const userId = req.params.id
-   const {name, email, address} = user
+   const { name, email, address } = user
    await handleUpdateUser(userId, name, email, address)
    res.redirect("/")
 }
 
-export {getHomePage, getCreateUserPage, postCreateUser, postDeleteUser, getViewUserById, postUpdateUser}
+export { getHomePage, postCreateUser, postDeleteUser, getViewUserById, postUpdateUser }
