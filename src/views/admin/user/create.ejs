@@ -11,6 +11,21 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="/admin/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
+    <script>
+        $(document).ready(() => {
+            const avatarFile = $("#avatarFile");
+            avatarFile.change(function (e) {
+                const imgURL = URL.createObjectURL(e.target.files[0]);
+                $("#avatarPreview").attr("src", imgURL);
+                $("#avatarPreview").css({ "display": "block" });
+            });
+        });
+    </script>
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -30,7 +45,7 @@
                         <div class="row">
                             <div class="col-6 mx-auto">
                                 <h3 style="padding: 10px 0">Create a user:</h3>
-                                <form action="/handle-create-user" method="post">
+                                <form action="/admin/handle-create-user" method="post" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label class="form-label">Name:</label>
                                         <input name="name" type="text" class="form-control" placeholder="your name">
@@ -40,6 +55,31 @@
                                         <input name="email" type="email" class="form-control"
                                             placeholder="name@example.com">
                                     </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-6">
+                                            <label class="form-label">Phone</label>
+                                            <input type="text" class="form-control" name="phone">
+                                        </div>
+                                        <div class="mb-3 col-6">
+                                            <label for="inputState" class="form-label">Role</label>
+                                            <select id="inputState" class="form-select">
+                                                <% roles.forEach(role=> { %>
+                                                    <option>
+                                                        <%=role.name%>
+                                                    </option>
+                                                    <% }) %>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label">Avatar:</label>
+                                        <input style="max-height: 250px; display: block;" class="form-control"
+                                            type="file" id="avatarFile" accept=".png, .jpg, .jpeg" name="avatar">
+
+                                    </div>
+                                    <img style="max-height: 250px; display: none;" alt="avatar preview"
+                                        id="avatarPreview" />
                                     <div class="mb-3">
                                         <label class="form-label">Address:</label>
                                         <textarea name="address" class="form-control" rows="2"></textarea>

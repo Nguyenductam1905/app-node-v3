@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { getAllUsers } from "services/user.services"
+import { getAllRoles, getAllUsers } from "services/user.services"
 
 
 const getDashboardPage = (req: Request, res: Response) => {
@@ -20,7 +20,8 @@ const getAdminProductPage = (req: Request, res: Response) => {
 }
 
 const getCreateUserPage = async (req: Request, res: Response) => {
-   res.render("admin/user/create.ejs")
+   const roles = await getAllRoles()
+   res.render("admin/user/create.ejs", {roles})
 }
 
 export { getDashboardPage, getAdminUserPage, getAdminOrderPage, getAdminProductPage, getCreateUserPage }

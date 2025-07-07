@@ -28,7 +28,20 @@ const initDatabase = async () => {
             ]
         })        
     }
-
+    if (await prisma.role.count() === 0){
+        await prisma.role.createMany({
+            data: [
+                {
+                    name: "ADMIN",
+                    description: "Admin of system"
+                },
+                {
+                    name: "USER",
+                    description: "User normally"
+                },
+            ]
+        })
+    }
 }
 
 export default initDatabase

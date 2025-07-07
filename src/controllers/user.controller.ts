@@ -11,7 +11,7 @@ const getHomePage = async (req: Request, res: Response) => {
 
 const postCreateUser = async (req: Request, res: Response) => {
    const info = req.body
-   const { name, email, address } = info
+   const { name, email, phone, role, address } = info
    await handleCreateUser(name, email, address)
    res.redirect("/")
 }

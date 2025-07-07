@@ -41,7 +41,9 @@
     "typescript": "5.8.3"
   },
   "dependencies": {
+    "@types/multer": "^2.0.0",
     "ejs": "^3.1.10",
+    "multer": "^2.0.1",
     "mysql2": "^3.14.1"
   }
 }
