@@ -1,6 +1,7 @@
 import express from "express";
 import { getHomePage, postCreateUser, postDeleteUser, getViewUserById, postUpdateUser } from "controllers/user.controller";
 import { getDashboardPage, getAdminUserPage, getAdminProductPage, getAdminOrderPage, getCreateUserPage } from "controllers/admin/dashboard.controller";
+import fileUploadMiddleware from "src/middleware/multer";
 
 const router = express.Router()
 const multer  = require('multer')
@@ -14,11 +15,11 @@ export const webRoutes = (app: express.Application) => {
 
     router.post("/handle-create-user", postCreateUser)
 
-    router.post("/handle-delete-user/:id", postDeleteUser)
+    router.post("/admin/delete-user/:id", postDeleteUser)
 
-    router.get("/view-user/:id", getViewUserById)
+    router.get("/admin/view-user/:id", getViewUserById)
 
-    router.post("/handle-update-user/:id", postUpdateUser)
+    router.post("/admin/update-user/:id", fileUploadMiddleware("avatar"), postUpdateUser)
 
     router.get("/admin", getDashboardPage)
 
@@ -30,10 +31,7 @@ export const webRoutes = (app: express.Application) => {
 
     router.get("/admin/create-user", getCreateUserPage)
 
-    // router.post("/admin/handle-create-user", postCreateUser)
-    router.post("/admin/handle-create-user", upload.single('avatar'),(req,res)=>{
-        res.send("OK")
-    })
+    router.post("/admin/handle-create-user", fileUploadMiddleware("avatar"), postCreateUser)
 
     router.get("/admin/user/create", getCreateUserPage)
 

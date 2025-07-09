@@ -1,4 +1,12 @@
-import {prisma} from "config/client"
+import { prisma } from "config/client"
+import { ACCOUNT_TYPE } from "config/constant"
+import bcript from "bcrypt"
+
+const saltRounds = 10;
+
+const hashPassword = async (plaintext: string) => {
+    return await bcript.hash(plaintext, saltRounds)
+}
 
 const getAllUsers = async () => {
     const users = await prisma.user.findMany()
@@ -12,21 +20,33 @@ const getAllRoles = async () => {
 const handleCreateUser = async (
     name: string,
     email: string,
-    address: string) => {
+    address: string,
+    phone: string,
+    avatar: any,
+    role: any
+) => {
+    if(role === "USER"){
+        role = 2
+    }
+    else{
+        role = 1
+    }
+    const defaultPassword = await hashPassword("123456")
     await prisma.user.create({
         data: {
             fullName: name,
             username: email,
             address: address,
-            password: "",
-            phone: "",
-            accountType: "",
-            avatar: ""
+            password: defaultPassword,
+            phone: phone,
+            accountType: ACCOUNT_TYPE.SYSTEM,
+            avatar: avatar || null,
+            roleId: role
         }
     })
 }
 
-const handleDeleteUser = async (id:any) => {
+const handleDeleteUser = async (id: any) => {
     await prisma.user.delete({
         where: {
             id: id
@@ -34,10 +54,10 @@ const handleDeleteUser = async (id:any) => {
     })
 }
 
-const handleViewUser = async (id:any) => {
+const handleViewUser = async (id: any) => {
     const user = await prisma.user.findUnique({
         where: {
-            id: id,
+            id: +id,
         },
     })
     return user
@@ -53,19 +73,20 @@ const handleViewUser = async (id:any) => {
     // }
 }
 
-const handleUpdateUser = async (id: any, name: string, email: string, address: string) => {
+const handleUpdateUser = async (id: any, name: string, email: string, address: string, phone: string, role: any, avatar: string) => {
     await prisma.user.update({
         where: {
             id: id,
         },
         data: {
             fullName: name,
-            username: email,
+            // username: email,
             address: address,
-            password: "",
-            phone: "",
-            accountType: "",
-            avatar: ""
+            // password: defaultPassword,
+            phone: phone,
+            accountType: ACCOUNT_TYPE.SYSTEM,
+            ...(avatar !== undefined && {avatar: avatar}),
+            roleId: role
         },
     })
     // const connection = await getConnection();
@@ -80,4 +101,4 @@ const handleUpdateUser = async (id: any, name: string, email: string, address: s
     // }
 }
 
-export { handleCreateUser, getAllUsers, handleDeleteUser, handleViewUser, handleUpdateUser, getAllRoles }
+export { handleCreateUser, getAllUsers, handleDeleteUser, handleViewUser, handleUpdateUser, getAllRoles, hashPassword }

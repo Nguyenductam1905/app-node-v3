@@ -63,11 +63,11 @@
                                         </td>
                                         <td>
                                             <div style="display: flex; gap: 10px;">
-                                                <form action="/handle-delete-user/<%=user.id%>" method="post">
+                                                <form action="/admin/delete-user/<%=user.id%>" method="post">
                                                     <input name="id" type="hidden" value="<%=user.id%>">
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
-                                                <form action="/view-user/<%=user.id%>" method="get">
+                                                <form action="/admin/view-user/<%=user.id%>" method="get">
                                                     <input name="id" type="hidden" value="<%=user.id%>">
                                                     <button type="submit" class="btn btn-warning">View user</button>
                                                 </form>
