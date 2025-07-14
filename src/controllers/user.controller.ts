@@ -38,7 +38,7 @@ const postUpdateUser = async (req: Request, res: Response) => {
    const { name, email, address, phone, role, avatar } = user
    console.log(user)
    await handleUpdateUser(+userId, name, email, address, phone, +role, avatar)
-   res.redirect("/")
+   res.redirect("/admin/user")
 }
 
 export { getHomePage, postCreateUser, postDeleteUser, getViewUserById, postUpdateUser }
