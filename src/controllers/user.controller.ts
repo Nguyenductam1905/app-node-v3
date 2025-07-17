@@ -41,4 +41,7 @@ const postUpdateUser = async (req: Request, res: Response) => {
    res.redirect("/admin/user")
 }
 
-export { getHomePage, postCreateUser, postDeleteUser, getViewUserById, postUpdateUser }
+const getProductPage = (req: Request, res: Response) =>{
+   return res.render("client/product/detail.ejs")
+}
+export { getHomePage, postCreateUser, postDeleteUser, getViewUserById, postUpdateUser, getProductPage }
