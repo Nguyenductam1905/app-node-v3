@@ -44,71 +44,79 @@
                         </ol>
                         <div class="row">
                             <div class="col-6 mx-auto">
-                                <h3 style="padding: 10px 0">Create a product:</h3>
-                                <form action="/admin/handle-create-product" method="post" enctype="multipart/form-data">
-                                    <div class="row">
-                                        <div class="mb-3 col-6">
-                                            <label class="form-label">Name:</label>
-                                            <input required name="name" type="text" class="form-control" placeholder="your name">
-                                        </div>
-                                        <div class="mb-3 col-6">
-                                            <label class="form-label">Price</label>
-                                            <input required type="text" class="form-control" name="price">
-                                        </div>
+                                <% errors.forEach(error=> { %>
+                                    <div class="alert alert-danger mb-3">
+                                        <%=error%>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Detail Description:</label>
-                                        <textarea required name="detailDesc" class="form-control" rows="2"></textarea>
-                                    </div>
-                                    <div class="row">
-                                        <div class="mb-3 col-6">
-                                            <label class="form-label">Short Description</label>
-                                            <input required type="text" class="form-control" name="shortDesc">
-                                        </div>
-                                        <div class="mb-3 col-6">
-                                            <label class="form-label">Quantity</label>
-                                            <input required type="text" class="form-control" name="quantity">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="row">
-                                            <div class="mb-3 col-6">
-                                                <label class="form-label">Factory</label>
-                                                <select name="factory" class="form-select">
-                                                    <option value="APPLE">Apple (MacBook)</option>
-                                                    <option value="ASUS">Asus</option>
-                                                    <option value="LENOVO">Lenovo</option>
-                                                    <option value="DELL">Dell</option>
-                                                    <option value="LG">LG</option>
-                                                    <option value="ACER">Acer</option>
-                                                </select>
+                                    <% }) %>
+                                        <h3 style="padding: 10px 0">Create a product:</h3>
+                                        <form action="/admin/handle-create-product" method="post"
+                                            enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="mb-3 col-6">
+                                                    <label class="form-label">Name:</label>
+                                                    <input name="name" type="text" class="form-control"
+                                                        placeholder="your name">
+                                                </div>
+                                                <div class="mb-3 col-6">
+                                                    <label class="form-label">Price</label>
+                                                    <input type="text" class="form-control" name="price">
+                                                </div>
                                             </div>
-                                            <div class="mb-3 col-6">
-                                                <label class="form-label">Target</label>
-                                                <select name="target" class="form-select">
-                                                    <option value="GAMING">Gaming</option>
-                                                    <option value="SINHVIEN-VANPHONG">Sinh viên - Văn phòng
-                                                    </option>
-                                                    <option value="THIET-KE-DO-HOA">Thiết kế đồ họa</option>
-                                                    <option value="MONG-NHE">Mỏng nhẹ</option>
-                                                    <option value="DOANH-NHAN">Doanh nhân</option>
-                                                </select>
+                                            <div class="mb-3">
+                                                <label class="form-label">Detail Description:</label>
+                                                <textarea name="detailDesc" class="form-control"
+                                                    rows="2"></textarea>
                                             </div>
-                                        </div>
+                                            <div class="row">
+                                                <div class="mb-3 col-6">
+                                                    <label class="form-label">Short Description</label>
+                                                    <input type="text" class="form-control" name="shortDesc">
+                                                </div>
+                                                <div class="mb-3 col-6">
+                                                    <label class="form-label">Quantity</label>
+                                                    <input type="text" class="form-control" name="quantity">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="row">
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label">Factory</label>
+                                                        <select name="factory" class="form-select">
+                                                            <option value="APPLE">Apple (MacBook)</option>
+                                                            <option value="ASUS">Asus</option>
+                                                            <option value="LENOVO">Lenovo</option>
+                                                            <option value="DELL">Dell</option>
+                                                            <option value="LG">LG</option>
+                                                            <option value="ACER">Acer</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label">Target</label>
+                                                        <select name="target" class="form-select">
+                                                            <option value="GAMING">Gaming</option>
+                                                            <option value="SINHVIEN-VANPHONG">Sinh viên - Văn phòng
+                                                            </option>
+                                                            <option value="THIET-KE-DO-HOA">Thiết kế đồ họa</option>
+                                                            <option value="MONG-NHE">Mỏng nhẹ</option>
+                                                            <option value="DOANH-NHAN">Doanh nhân</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
 
-                                    </div>
-                                    <div class="mb-3 ">
-                                        <label for="formFile" class="form-label">Image</label>
-                                        <input style="max-height: 250px; display: block;" class="form-control"
-                                            type="file" id="imageFile" accept=".png, .jpg, .jpeg" name="image">
-                                    </div>
-                                    <img style="max-height: 250px; display: none;" alt="image preview"
-                                        id="imagePreview" />
+                                            </div>
+                                            <div class="mb-3 ">
+                                                <label for="formFile" class="form-label">Image</label>
+                                                <input style="max-height: 250px; display: block;" class="form-control"
+                                                    type="file" id="imageFile" accept=".png, .jpg, .jpeg" name="image">
+                                            </div>
+                                            <img style="max-height: 250px; display: none;" alt="image preview"
+                                                id="imagePreview" />
 
-                                    <div class="mb-3">
-                                        <button type="submit" class="btn btn-warning">Submit</button>
-                                    </div>
-                                </form>
+                                            <div class="mb-3">
+                                                <button type="submit" class="btn btn-warning">Submit</button>
+                                            </div>
+                                        </form>
 
                             </div>
                         </div>
