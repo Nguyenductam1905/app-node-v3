@@ -85,8 +85,9 @@ const handleUpdateUser = async (id: any, name: string, email: string, address: s
             // password: defaultPassword,
             phone: phone,
             accountType: ACCOUNT_TYPE.SYSTEM,
-            ...(avatar !== undefined && { avatar: avatar }),
-            roleId: role
+            roleId: role,
+            ...(avatar !== undefined && { avatar: avatar })
+            
         },
     })
     // const connection = await getConnection();

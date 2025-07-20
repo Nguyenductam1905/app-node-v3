@@ -63,7 +63,7 @@
                                             </td>
 
                                             <td>
-                                                <img style="height:100px; display: <%= product.image === 'image' ? 'none' : 'block' %>;"
+                                                <img style="height:100px; display:<%= product.image === 'image' ? 'none' : 'block' %>;"
                                                     src="/images/product/<%= product.image %>" alt="laptop">
                                             </td>
                                             <td>
@@ -92,7 +92,7 @@
                                                     </form>
                                                     <form action="/admin/view-product/<%=product.id%>" method="get">
                                                         <input name="id" type="hidden" value="<%=product.id%>">
-                                                        <button type="submit" class="btn btn-warning">View user</button>
+                                                        <button type="submit" class="btn btn-warning">View product</button>
                                                     </form>
                                                 </div>
                                             </td>

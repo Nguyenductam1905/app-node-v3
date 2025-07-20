@@ -1,4 +1,4 @@
-import {prisma} from "config/client"
+import { prisma } from "config/client"
 import { TProductSchema } from "src/validation/user.schema"
 import id from "zod/v4/locales/id.cjs"
 
@@ -11,7 +11,7 @@ const createProduct = async (
     quantity: number,
     target: string,
     image: string
-    ) => {
+) => {
     await prisma.product.create({
         data: {
             name: name,
@@ -21,7 +21,7 @@ const createProduct = async (
             factory: factory,
             quantity: +quantity,
             target: target,
-            ...(image && {image: image})
+            ...(image && { image: image })
         }
     })
 }
@@ -38,10 +38,40 @@ const handleDeleteProduct = async (id: number) => {
 
 const handleViewProduct = async (id: number) => {
     const product = await prisma.product.findUnique({
-        where: {id: id}
+        where: { id: id }
     })
     console.log(product)
     return product
 }
 
-export {createProduct, getProductList, handleDeleteProduct, handleViewProduct}
+const handleUpdateProduct = async (
+    id: number,
+    name: string,
+    price: any,
+    detailDesc: string,
+    shortDesc: string,
+    factory: string,
+    quantity: any,
+    target: string,
+    image: string
+) => {
+        console.log(price);
+    await prisma.product.update({
+        where: {
+            id: id
+        },
+        data: {
+            name: name,
+            price: +price,
+            detailDesc: detailDesc,
+            shortDesc: shortDesc,
+            factory: factory,
+            quantity: +quantity,
+            target: target,
+            ...(image && { image: image })
+        },
+        
+    })
+}
+
+export { createProduct, getProductList, handleDeleteProduct, handleViewProduct, handleUpdateProduct }

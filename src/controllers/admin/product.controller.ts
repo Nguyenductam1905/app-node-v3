@@ -1,8 +1,7 @@
-import { error } from "console";
 import { Request, Response } from "express";
-import { createProduct } from "services/admin/product.service";
+import { createProduct, handleUpdateProduct, handleViewProduct } from "services/admin/product.service";
 import { ProductSchema, TProductSchema } from "src/validation/user.schema";
-import { string } from "zod";
+
 
 const getAdminCreateProduct = (req: Request, res: Response) => {
     const errors:any = []
@@ -45,6 +44,31 @@ const postAdminCreateProduct = async (req: Request, res: Response) => {
 
 }
 
+const postUpdateProduct = async (req: Request, res: Response) => {
+    const productId: number = +req.params.id;
+    const {
+        name, 
+        price, 
+        detailDesc, 
+        shortDesc,
+        factory, 
+        quantity, 
+        target
+    } = req.body as TProductSchema
+    const productImage = req.file?.filename
+    console.log(req.body)
+    await handleUpdateProduct(
+        productId, 
+        name, 
+        price, 
+        detailDesc, 
+        shortDesc,
+        factory, 
+        quantity, 
+        target, 
+        productImage || ""
+    )
+    res.redirect("/admin/product")
+}
 
-
-export {getAdminCreateProduct, postAdminCreateProduct}
+export {getAdminCreateProduct, postAdminCreateProduct, postUpdateProduct}

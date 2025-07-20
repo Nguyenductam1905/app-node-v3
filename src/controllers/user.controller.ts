@@ -37,7 +37,6 @@ const postUpdateUser = async (req: Request, res: Response) => {
    const user = req.body;
    const userId = req.params.id;
    const { name, email, address, phone, role, avatar } = user
-   console.log(user)
    await handleUpdateUser(+userId, name, email, address, phone, +role, avatar)
    res.redirect("/admin/user")
 }
@@ -72,5 +71,8 @@ const getAdminViewProduct = async (req: Request, res: Response) => {
    const productInfo = await handleViewProduct(+productId)
    return res.render("admin/product/detail.ejs", {product: productInfo, factoryOptions, targetOptions})
 }
+
+
+
 
 export { getHomePage, postCreateUser, postDeleteUser, getViewUserById, postUpdateUser, getProductPage, postAdminDeleteProduct, getAdminViewProduct }

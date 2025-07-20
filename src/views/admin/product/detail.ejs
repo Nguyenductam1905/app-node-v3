@@ -37,15 +37,15 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Manage Orders</h1>
+                        <h1 class="mt-4">Manage Product</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active"><a href="/admin/product">Product</a></li>
                         </ol>
                         <div class="row">
                             <div class="col-6 mx-auto">
-                                <h3 style="padding: 10px 0">Detail a user:</h3>
-                                <form action="/admin/update-user/<%=product.id%>" method="post"
+                                <h3 style="padding: 10px 0">Detail a Product:</h3>
+                                <form action="/admin/update-product/<%=product.id%>" method="post"
                                     enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="mb-3 col-6">
@@ -55,8 +55,7 @@
                                         </div>
                                         <div class="mb-3 col-6">
                                             <label class="form-label">Price:</label>
-                                            <input name="price" type="number" class="form-control" placeholder="1"
-                                                value="<%=product.price%>">
+                                            <input name="price" type="text" class="form-control" value="<%=product.price%>">
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -67,12 +66,12 @@
                                     <div class="row">
                                         <div class="mb-3 col-6">
                                             <label class="form-label">Short Description:</label>
-                                            <input name="price" type="text" class="form-control" placeholder=""
+                                            <input name="shortDesc" type="text" class="form-control" placeholder=""
                                                 value="<%=product.shortDesc%>">
                                         </div>
                                         <div class="mb-3 col-6">
                                             <label class="form-label">Quantity:</label>
-                                            <input name="price" type="number" class="form-control"
+                                            <input name="quantity" type="number" class="form-control"
                                                 value="<%=product.quantity%>">
                                         </div>
                                     </div>
@@ -102,11 +101,11 @@
                                         <input style="max-height: 250px; display: block;" class="form-control"
                                             type="file" id="imageFile" accept=".png, .jpg, .jpeg" name="image" value="<%= product.image %>">
                                     </div>
-                                    <img style="max-height: 250px; display: none;" alt="image preview"
-                                        id="imagePreview" src="/client/images/product/<%= product.image %>"/>
+                                    <img style="max-height: 250px; display: block;" alt="image preview"
+                                        id="imagePreview" src="/images/product/<%= product.image %>"/>
 
                                     <div class="mb-3">
-                                        <button type="submit" class="btn btn-warning">Submit</button>
+                                        <button type="submit" class="btn btn-warning">Update</button>
                                     </div>
                                 </form>
 
