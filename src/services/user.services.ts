@@ -25,10 +25,10 @@ const handleCreateUser = async (
     avatar: any,
     role: any
 ) => {
-    if(role === "USER"){
+    if (role === "USER") {
         role = 2
     }
-    else{
+    else {
         role = 1
     }
     const defaultPassword = await hashPassword("123456")
@@ -85,7 +85,7 @@ const handleUpdateUser = async (id: any, name: string, email: string, address: s
             // password: defaultPassword,
             phone: phone,
             accountType: ACCOUNT_TYPE.SYSTEM,
-            ...(avatar !== undefined && {avatar: avatar}),
+            ...(avatar !== undefined && { avatar: avatar }),
             roleId: role
         },
     })
@@ -100,5 +100,6 @@ const handleUpdateUser = async (id: any, name: string, email: string, address: s
 
     // }
 }
+
 
 export { handleCreateUser, getAllUsers, handleDeleteUser, handleViewUser, handleUpdateUser, getAllRoles, hashPassword }

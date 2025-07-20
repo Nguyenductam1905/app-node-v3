@@ -27,25 +27,80 @@
                             <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                             <li class="breadcrumb-item active"><a href="/admin/product">Product</a></li>
                         </ol>
-                        <table class="table table-hover table-bordered">
-                            <div class="d-flex justify-content-between align-items-center">
-                              <h4>Table Users</h4>  
-                              <a class="btn btn-warning" href="/admin/create-product">Create a product</a>
-                            </div>
-                            <br>
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Address</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                            </tbody>
-                        </table>
+                        <div class="overflow-scroll">
+                            <table class="table table-hover table-bordered">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4>Table Users</h4>
+                                    <a class="btn btn-warning" href="/admin/create-product">Create a product</a>
+                                </div>
+                                <br>
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Image</th>
+                                        <th>Detail description</th>
+                                        <th>Short description</th>
+                                        <th>Factory</th>
+                                        <th>Quantity</th>
+                                        <th>Target</th>
+                                        <th>Sold</th>
+                                        <th>Activity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% products.forEach(product=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= product.id %>
+                                            </td>
+                                            <td>
+                                                <%= product.name %>
+                                            </td>
+                                            <td>
+                                                <%= product.price %>
+                                            </td>
+
+                                            <td>
+                                                <img style="height:100px; display: <%= product.image === 'image' ? 'none' : 'block' %>;"
+                                                    src="/images/product/<%= product.image %>" alt="laptop">
+                                            </td>
+                                            <td>
+                                                <%= product.detailDesc %>
+                                            </td>
+                                            <td>
+                                                <%= product.shortDesc %>
+                                            </td>
+                                            <td>
+                                                <%= product.factory %>
+                                            </td>
+                                            <td>
+                                                <%= product.quantity %>
+                                            </td>
+                                            <td>
+                                                <%= product.target %>
+                                            </td>
+                                            <td>
+                                                <%= product.sold %>
+                                            </td>
+                                            <td>
+                                                <div style="display: flex; gap: 10px;">
+                                                    <form action="/admin/delete-product/<%=product.id%>" method="post">
+                                                        <input name="id" type="hidden" value="<%=product.id%>">
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                    <form action="/admin/view-product/<%=product.id%>" method="get">
+                                                        <input name="id" type="hidden" value="<%=product.id%>">
+                                                        <button type="submit" class="btn btn-warning">View user</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </main>

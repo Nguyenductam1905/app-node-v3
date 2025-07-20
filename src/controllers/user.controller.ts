@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import { handleDeleteProduct, handleViewProduct } from "services/admin/product.service"
 import { getAllUsers, handleCreateUser, handleDeleteUser, handleViewUser, handleUpdateUser, getAllRoles } from "services/user.services"
 
 
@@ -33,8 +34,8 @@ const getViewUserById = async (req: Request, res: Response) => {
 }
 
 const postUpdateUser = async (req: Request, res: Response) => {
-   const user = req.body
-   const userId = req.params.id
+   const user = req.body;
+   const userId = req.params.id;
    const { name, email, address, phone, role, avatar } = user
    console.log(user)
    await handleUpdateUser(+userId, name, email, address, phone, +role, avatar)
@@ -44,4 +45,32 @@ const postUpdateUser = async (req: Request, res: Response) => {
 const getProductPage = (req: Request, res: Response) =>{
    return res.render("client/product/detail.ejs")
 }
-export { getHomePage, postCreateUser, postDeleteUser, getViewUserById, postUpdateUser, getProductPage }
+
+const postAdminDeleteProduct = async (req: Request, res: Response) => {
+   const productId = req.params.id;
+   await handleDeleteProduct(+productId)
+   return res.redirect("/admin/product")
+}
+
+const getAdminViewProduct = async (req: Request, res: Response) => {
+   const factoryOptions = [
+      {name: "Aplle (Macbook)", value: "APPLE"},
+      {name: "Asus", value: "ASUS"},
+      {name: "Lenovo", value: "LENOVO"},
+      {name: "Dell", value: "DELL"},
+      {name: "LG", value: "LG"},
+      {name: "Acer", value: "ACER"},
+   ]
+   const targetOptions = [
+      {name: "Gaming", value: "GAMING"},
+      {name: "Sinh viên - Văn phòng", value: "SINHVIEN-VANPHONG"},
+      {name: "Thiết kế đồ họa", value: "THIET-KE-DO-HOA"},
+      {name: "Mỏng nhẹ", value: "MONG-NHE"},
+      {name: "Doanh nhân", value: "DOANH-NHAN"},
+   ]
+   const productId = req.params.id;
+   const productInfo = await handleViewProduct(+productId)
+   return res.render("admin/product/detail.ejs", {product: productInfo, factoryOptions, targetOptions})
+}
+
+export { getHomePage, postCreateUser, postDeleteUser, getViewUserById, postUpdateUser, getProductPage, postAdminDeleteProduct, getAdminViewProduct }
