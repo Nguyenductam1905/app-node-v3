@@ -1,7 +1,8 @@
 import { Request, Response } from "express"
 import { handleDeleteProduct, handleViewProduct } from "services/admin/product.service"
-import { getProduct } from "services/client/item.service"
+import { getProduct, getProductById } from "services/client/item.service"
 import { handleCreateUser, handleDeleteUser, handleViewUser, handleUpdateUser, getAllRoles } from "services/user.services"
+import { TProductSchema } from "src/validation/user.schema"
 
 
 
@@ -42,8 +43,16 @@ const postUpdateUser = async (req: Request, res: Response) => {
    res.redirect("/admin/user")
 }
 
-const getProductPage = (req: Request, res: Response) =>{
-   return res.render("client/product/detail.ejs")
+const getProductPage = async (req: Request, res: Response) =>{
+   const id = req.params.id;
+   const product = await getProductById(+id)
+   const products = await getProduct() 
+   const categories = ["APPLE", "DELL", "LENOVO", "ASUS", "LG", "ACER"]
+   res.render("client/product/detail.ejs", {
+      product,
+      products,
+      categories
+   })
 }
 
 const postAdminDeleteProduct = async (req: Request, res: Response) => {
