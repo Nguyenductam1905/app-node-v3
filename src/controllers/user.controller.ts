@@ -8,6 +8,9 @@ import { TProductSchema } from "src/validation/user.schema"
 
 const getHomePage = async (req: Request, res: Response) => {
    const products = await getProduct();
+   const user = req.user;
+   console.log(">>> check User: ", user)
+   console.log(req.session)
    res.render('client/home/show.ejs', {products})
 }
 

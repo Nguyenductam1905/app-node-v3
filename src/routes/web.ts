@@ -4,6 +4,7 @@ import { getDashboardPage, getAdminUserPage, getAdminProductPage, getAdminOrderP
 import fileUploadMiddleware from "src/middleware/multer";
 import { getAdminCreateProduct, postAdminCreateProduct, postUpdateProduct } from "controllers/admin/product.controller";
 import { getLoginPage, getRegisterPage, postRegister } from "controllers/client/auth.controller";
+import passport from "passport";
 
 const router = express.Router()
 const multer  = require('multer')
@@ -21,6 +22,12 @@ export const webRoutes = (app: express.Application) => {
     router.get("/login", getLoginPage)
 
     router.post("/register", postRegister)
+
+    router.post("/login", passport.authenticate('local', { 
+        successRedirect: "/", 
+        failureRedirect: '/login',
+        failureMessage: true
+    }))
 
     //admin routes
     router.post("/admin/delete-user/:id", postDeleteUser)

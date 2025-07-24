@@ -27,7 +27,10 @@
     "@prisma/client": "6.11.1",
     "@types/bcrypt": "5.0.2",
     "@types/express": "^5.0.3",
+    "@types/express-session": "1.18.1",
     "@types/node": "^24.0.10",
+    "@types/passport": "^1.0.17",
+    "@types/passport-local": "1.0.38",
     "dotenv": "^17.0.0",
     "eslint": "^9.30.0",
     "express": "^5.1.0",
@@ -42,11 +45,15 @@
     "typescript": "5.8.3"
   },
   "dependencies": {
+    "@quixo3/prisma-session-store": "3.1.13",
     "@types/multer": "^2.0.0",
     "bcrypt": "5.1.1",
     "ejs": "^3.1.10",
+    "express-session": "1.18.1",
     "multer": "^2.0.1",
     "mysql2": "^3.14.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
     "uuid": "^11.1.0",
     "zod": "4.0.5"
   }

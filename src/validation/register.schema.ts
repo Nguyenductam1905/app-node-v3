@@ -1,13 +1,6 @@
 import { prisma } from "config/client"
+import { isEmailExist } from "services/client/auth.service";
 import z, { email } from "zod"
-
-const isEmailExist = async (email:string) => {
-    const user = await prisma.user.findUnique({
-        where: {username: email}
-    })
-    if(user){ return true; }
-    return false
-}
 
 const passwordSchema = z.string()
         .min(6, {message: "Password tối thiểu 6 kí tự"})

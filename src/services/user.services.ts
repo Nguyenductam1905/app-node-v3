@@ -8,6 +8,10 @@ const hashPassword = async (plaintext: string) => {
     return await bcript.hash(plaintext, saltRounds)
 }
 
+const comparePassword = async (plaintText: string, hashPassword: string) => {
+    return await bcript.compare(plaintText, hashPassword)
+}
+
 const getAllUsers = async () => {
     const users = await prisma.user.findMany()
     return users
@@ -49,7 +53,7 @@ const handleCreateUser = async (
 const handleDeleteUser = async (id: any) => {
     await prisma.user.delete({
         where: {
-            id: id
+            id: +id
         }
     })
 }
@@ -103,4 +107,4 @@ const handleUpdateUser = async (id: any, name: string, email: string, address: s
 }
 
 
-export { handleCreateUser, getAllUsers, handleDeleteUser, handleViewUser, handleUpdateUser, getAllRoles, hashPassword }
+export { handleCreateUser, getAllUsers, handleDeleteUser, handleViewUser, handleUpdateUser, getAllRoles, hashPassword, comparePassword }

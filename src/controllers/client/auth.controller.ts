@@ -1,4 +1,4 @@
-import { error } from "console";
+
 import { Request, Response } from "express";
 import { registerNewUser } from "services/client/auth.service";
 import { hashPassword } from "services/user.services";
@@ -13,7 +13,10 @@ const getRegisterPage = (req: Request, res: Response) => {
 }
 
 const getLoginPage = (req: Request, res: Response) => {
-    res.render("client/auth/login.ejs")
+
+    const session = req.session as any;
+    let messages = session?.messages ?? []
+    res.render("client/auth/login.ejs", {messages})
 }
 
 const postRegister = async (req: Request, res: Response) => {
@@ -24,7 +27,7 @@ const postRegister = async (req: Request, res: Response) => {
         const errorZod = validate.error.issues;
         const errors = errorZod?.map(item => `${item.message} (${String(item.path[0])})`)
         const oldData = {fullName, email, password, confirmPassword}
-        res.render("client/auth/register.ejs",{errors, oldData})
+        res.render("client/auth/register.ejs", {errors, oldData})
     }
     await registerNewUser(fullName, email, await hashPassword(password))
     res.redirect("/login")

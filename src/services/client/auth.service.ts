@@ -1,15 +1,15 @@
 import { prisma } from "config/client";
 import { ACCOUNT_TYPE } from "config/constant";
-import { hashPassword } from "services/user.services"
+import { comparePassword, hashPassword } from "services/user.services"
 
 const registerNewUser = async (fullName: string, email: string, password: string) => {
     const newPassword = await hashPassword(password);
     const userRole = await prisma.role.findUnique({
-        where: {name: "USER"}
+        where: { name: "USER" }
     })
-    if(userRole) {
+    if (userRole) {
         await prisma.user.create({
-            data:{
+            data: {
                 username: email,
                 password: password,
                 fullName: fullName,
@@ -23,4 +23,13 @@ const registerNewUser = async (fullName: string, email: string, password: string
     }
 }
 
-export {registerNewUser}
+const isEmailExist = async (email: string) => {
+    const user = await prisma.user.findUnique({
+        where: { username: email }
+    })
+    if (user) { return true; }
+    return false
+}
+
+
+export { registerNewUser, isEmailExist }
