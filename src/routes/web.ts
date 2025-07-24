@@ -32,7 +32,7 @@ export const webRoutes = (app: express.Application) => {
     //admin routes
     router.post("/admin/delete-user/:id", postDeleteUser)
 
-    router.get("/admin/view-user/:id", getViewUserById)
+    router.get("/admin/view-user/:id", fileUploadMiddleware("avatar"), getViewUserById)
 
     router.post("/admin/update-user/:id", fileUploadMiddleware("avatar"), postUpdateUser)
 

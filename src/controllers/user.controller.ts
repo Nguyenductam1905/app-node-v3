@@ -41,7 +41,10 @@ const getViewUserById = async (req: Request, res: Response) => {
 const postUpdateUser = async (req: Request, res: Response) => {
    const user = req.body;
    const userId = req.params.id;
-   const { name, email, address, phone, role, avatar } = user
+   const { name, email, address, phone, role } = user
+   const avatar: string = req.file?.filename || ""
+   console.log(avatar);
+   
    await handleUpdateUser(+userId, name, email, address, phone, +role, avatar)
    res.redirect("/admin/user")
 }
