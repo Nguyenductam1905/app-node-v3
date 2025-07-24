@@ -5,6 +5,7 @@ import fileUploadMiddleware from "src/middleware/multer";
 import { getAdminCreateProduct, postAdminCreateProduct, postUpdateProduct } from "controllers/admin/product.controller";
 import { getLoginPage, getRegisterPage, postRegister } from "controllers/client/auth.controller";
 import passport from "passport";
+import { isLogin } from "src/middleware/auth";
 
 const router = express.Router()
 const multer  = require('multer')
@@ -19,7 +20,7 @@ export const webRoutes = (app: express.Application) => {
 
     router.get("/register", getRegisterPage)
 
-    router.get("/login", getLoginPage)
+    router.get("/login", isLogin ,getLoginPage)
 
     router.post("/register", postRegister)
 
