@@ -2,23 +2,26 @@ import { NextFunction, Request, Response } from "express"
 
 const isLogin = (req: Request, res: Response, next: NextFunction) => {
     const isAuthenticated = req.isAuthenticated();
-    if(isAuthenticated){
-        res.redirect("/")
+    if (isAuthenticated) {
+        return res.redirect("/")
     }
-    else{
+    else {
         next()
     }
 }
 
 const isAdmin = (req: Request, res: Response, next: NextFunction) => {
-    const user = req.user as any
-    if(user?.role?.name === "ADMIN"){
-        res.redirect("/admin")
+    if (req.path.startsWith("/admin")) {
+        const user = req.user
+        if (user?.role?.name === "ADMIN") {
+            next()
+        } else {
+            res.render("status/403.ejs")
+        }
+        return;
     }
-    else{
-        res.redirect("/")
-    }
-} 
+
+}
 
 export {
     isLogin,

@@ -1,6 +1,6 @@
 
 import { prisma } from "config/client";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { registerNewUser } from "services/client/auth.service";
 import { hashPassword } from "services/user.services";
 import { RegisterSchema, TRegisterSchema } from "src/validation/register.schema";
@@ -57,4 +57,11 @@ const getSuccessRedirectPage = (req: Request, res: Response) => {
     else res.redirect("/")
 }
 
-export {getRegisterPage, getLoginPage, postRegister, getUserWithRoleById, getSuccessRedirectPage}
+const postLogout = (req: Request, res: Response, next: NextFunction) => {
+    req.logOut(function(err){
+        if(err){return next(err)}
+        return res.redirect("/");
+    })
+}
+
+export {getRegisterPage, getLoginPage, postRegister, getUserWithRoleById, getSuccessRedirectPage, postLogout}

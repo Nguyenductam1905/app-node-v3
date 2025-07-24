@@ -18,7 +18,7 @@ const configPassportLocal = () => {
         if(messages.length){
             session.messages = [] // Xóa các tin nhắn sau khi đã lấy để tránh hiển thị lại.
         }
-        const user = await prisma.user.findUnique({ // Tìm người dùng trong cơ sở dữ liệu dựa trên username.
+        const user: any = await prisma.user.findUnique({ // Tìm người dùng trong cơ sở dữ liệu dựa trên username.
             where: {
                 username
             }

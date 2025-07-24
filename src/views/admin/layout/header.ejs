@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="index.html">Laptopshop</a>
         <!-- Sidebar Toggle-->
@@ -33,10 +35,13 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <form method="post" action="/logout">
+                        <button type="submit" class="dropdown-item">Đăng xuất</button>
+                    </form>
                 </ul>
             </li>
         </ul>
     </nav>
 </body>
+
 </html>

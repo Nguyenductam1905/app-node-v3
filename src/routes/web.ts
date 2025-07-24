@@ -3,7 +3,7 @@ import { getHomePage, postCreateUser, postDeleteUser, getViewUserById, postUpdat
 import { getDashboardPage, getAdminUserPage, getAdminProductPage, getAdminOrderPage, getCreateUserPage } from "controllers/admin/dashboard.controller";
 import fileUploadMiddleware from "src/middleware/multer";
 import { getAdminCreateProduct, postAdminCreateProduct, postUpdateProduct } from "controllers/admin/product.controller";
-import { getLoginPage, getRegisterPage, getSuccessRedirectPage, postRegister } from "controllers/client/auth.controller";
+import { getLoginPage, getRegisterPage, getSuccessRedirectPage, postLogout, postRegister } from "controllers/client/auth.controller";
 import passport from "passport";
 import { isAdmin, isLogin } from "src/middleware/auth";
 
@@ -20,7 +20,7 @@ export const webRoutes = (app: express.Application) => {
 
     router.get("/register", getRegisterPage)
 
-    router.get("/login", isLogin ,getLoginPage)
+    router.get("/login", getLoginPage)
 
     router.post("/register", postRegister)
 
@@ -32,9 +32,10 @@ export const webRoutes = (app: express.Application) => {
         failureMessage: true
     }))
 
-    //admin routes
-    router.get("/admin", isAdmin ,getDashboardPage)
+    router.post("/logout", postLogout)
 
+    //admin routes
+    router.get("/admin", getDashboardPage)
 
     router.post("/admin/delete-user/:id", postDeleteUser)
 
@@ -64,6 +65,6 @@ export const webRoutes = (app: express.Application) => {
 
     router.post("/admin/update-product/:id", fileUploadMiddleware("image", "images/product"), postUpdateProduct)
 
-    app.use("/", router)
+    app.use("/", isAdmin, router)
 
 }
