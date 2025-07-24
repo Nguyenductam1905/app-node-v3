@@ -3,6 +3,7 @@ import crypto from "crypto"; // Import thư viện crypto để mã hóa (hiện
 import { Strategy as LocalStrategy } from "passport-local"; // Import LocalStrategy từ passport-local, dùng để xác thực bằng tên người dùng/mật khẩu.
 import { prisma } from "config/client"; // Import đối tượng prisma client để tương tác với cơ sở dữ liệu.
 import { comparePassword, handleViewUser } from "services/user.services"; // Import hàm comparePassword từ user.services để so sánh mật khẩu đã nhập với mật khẩu trong DB.
+import { getUserWithRoleById } from "controllers/client/auth.controller";
 
 
 const configPassportLocal = () => {
@@ -42,7 +43,6 @@ const configPassportLocal = () => {
     // Hàm serializeUser: Quyết định dữ liệu nào của người dùng sẽ được lưu vào session sau khi xác thực thành công.
     passport.serializeUser(function (user: any, cb) {
         process.nextTick(function () {
-
             cb(null, { id: user.id, username: user.username });
         });
     });
@@ -53,7 +53,8 @@ const configPassportLocal = () => {
 
             const {id, username} = user
             //truy van vao database
-            const userInDB = await handleViewUser(id)
+            const userInDB: any = await getUserWithRoleById(id)
+            console.log(userInDB)
             return cb(null, {...userInDB});
         });
     });

@@ -1,4 +1,5 @@
 
+import { prisma } from "config/client";
 import { Request, Response } from "express";
 import { registerNewUser } from "services/client/auth.service";
 import { hashPassword } from "services/user.services";
@@ -33,4 +34,27 @@ const postRegister = async (req: Request, res: Response) => {
     res.redirect("/login")
 }
 
-export {getRegisterPage, getLoginPage, postRegister}
+const getUserWithRoleById = async (id: string) => {
+    const user = await prisma.user.findUnique({
+        where: {id: +id},
+        //delete password
+        omit: {
+            password: true
+        },
+        //use relation bettween role and roleId
+        include: {
+            role: true
+        }
+    })
+    return user
+}
+
+const getSuccessRedirectPage = (req: Request, res: Response) => {
+    const user = req.user as any;
+    if (user?.role?.name === "ADMIN"){
+        res.redirect("/admin")
+    }
+    else res.redirect("/")
+}
+
+export {getRegisterPage, getLoginPage, postRegister, getUserWithRoleById, getSuccessRedirectPage}
