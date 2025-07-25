@@ -87,6 +87,15 @@
         <!-- Single Product Start -->
         <div class="container-fluid py-5 mt-5">
             <div class="container py-5">
+                <div class="mb-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Chi Tiết Sản Phẩm</li>
+                        </ol>
+                    </nav>
+                </div>
+
                 <div class="row g-4 mb-5">
                     <div class="col-lg-8 col-xl-9">
                         <div class="row g-4">
@@ -343,7 +352,9 @@
                                                 alt="Image">
                                         </div>
                                         <div style="margin-left: 15px;">
-                                            <h6 class=""><a href="/product/<%=product.id%>"><%=product.name%></a></h6>
+                                            <h6 class=""><a href="/product/<%=product.id%>">
+                                                    <%=product.name%>
+                                                </a></h6>
                                             <div class="d-flex mb-2">
                                                 <i class="fa fa-star text-secondary"></i>
                                                 <i class="fa fa-star text-secondary"></i>

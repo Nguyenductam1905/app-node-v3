@@ -22,7 +22,7 @@ const getLoginPage = (req: Request, res: Response) => {
 
 const postRegister = async (req: Request, res: Response) => {
     const {fullName, email, password, confirmPassword} = req.body as TRegisterSchema
-    console.log(req.body)
+    // console.log(req.body)
     const validate = await RegisterSchema.safeParseAsync(req.body)
     if(!validate.success){
         const errorZod = validate.error.issues;

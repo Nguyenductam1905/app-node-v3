@@ -12,7 +12,7 @@ const configPassportLocal = () => {
         // usernameField: "email", passwordField: "password" // (Tùy chọn) Có thể chỉ định tên trường cho username và password nếu khác với mặc định.
         passReqToCallback: true // Đặt thành true để truyền đối tượng req (request) vào hàm verify.
     }, async function verify(req, username, password, callback) { // Hàm verify sẽ được gọi khi Passport cố gắng xác thực người dùng.
-        console.log(">>> Check user: ", username, password); // In ra tên người dùng và mật khẩu để debug (KHÔNG NÊN LÀM TRONG MÔI TRƯỜNG SẢN XUẤT VÌ VẤN ĐỀ BẢO MẬT).
+        // console.log(">>> Check user: ", username, password); // In ra tên người dùng và mật khẩu để debug (KHÔNG NÊN LÀM TRONG MÔI TRƯỜNG SẢN XUẤT VÌ VẤN ĐỀ BẢO MẬT).
         const session = req.session as any; // Lấy đối tượng session từ request.
         let messages = session?.messages ?? [] // Lấy các tin nhắn từ session (ví dụ: thông báo lỗi).
         if(messages.length){
@@ -54,7 +54,7 @@ const configPassportLocal = () => {
             const {id, username} = user
             //truy van vao database
             const userInDB: any = await getUserWithRoleById(id)
-            console.log(userInDB)
+
             return cb(null, {...userInDB});
         });
     });

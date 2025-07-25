@@ -9,8 +9,8 @@ import { TProductSchema } from "src/validation/user.schema"
 const getHomePage = async (req: Request, res: Response) => {
    const products = await getProduct();
    const user = req.user;
-   console.log(">>> check User: ", user)
-   console.log(req.session)
+   // console.log(">>> check User: ", user)
+   // console.log(req.session)
    res.render('client/home/show.ejs', {products})
 }
 
@@ -43,7 +43,7 @@ const postUpdateUser = async (req: Request, res: Response) => {
    const userId = req.params.id;
    const { name, email, address, phone, role } = user
    const avatar: string = req.file?.filename || ""
-   console.log(avatar);
+   // console.log(avatar);
    
    await handleUpdateUser(+userId, name, email, address, phone, +role, avatar)
    res.redirect("/admin/user")

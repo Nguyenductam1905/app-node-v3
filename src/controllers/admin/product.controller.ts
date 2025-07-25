@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { createProduct, handleUpdateProduct, handleViewProduct } from "services/admin/product.service";
+import { addProductToCart } from "services/client/item.service";
 import { ProductSchema, TProductSchema } from "src/validation/user.schema";
 
 
@@ -56,7 +57,7 @@ const postUpdateProduct = async (req: Request, res: Response) => {
         target
     } = req.body as TProductSchema
     const productImage = req.file?.filename
-    console.log(req.body)
+    // console.log(req.body)
     await handleUpdateProduct(
         productId, 
         name, 
@@ -71,4 +72,24 @@ const postUpdateProduct = async (req: Request, res: Response) => {
     res.redirect("/admin/product")
 }
 
-export {getAdminCreateProduct, postAdminCreateProduct, postUpdateProduct}
+const postAddProductToCart = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const user = req.user;
+
+    if (!user) {
+        return res.redirect("/login");
+    }
+
+    await addProductToCart(1, +id, user);
+
+    return res.redirect("/");
+}
+
+const getCartPage = (req: Request, res: Response) => {
+    const user = req.user
+    if(!user) return res.redirect("/login")
+    return res.render("client/product/cart.ejs")
+}
+
+export {getAdminCreateProduct, postAdminCreateProduct, postUpdateProduct, postAddProductToCart, getCartPage}
