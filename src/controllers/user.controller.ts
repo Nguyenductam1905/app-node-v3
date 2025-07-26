@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { handleDeleteProduct, handleViewProduct } from "services/admin/product.service"
-import { getProduct, getProductById } from "services/client/item.service"
+import { getProduct, getProductById, getQuantityByProductId } from "services/client/item.service"
 import { handleCreateUser, handleDeleteUser, handleViewUser, handleUpdateUser, getAllRoles } from "services/user.services"
 import { TProductSchema } from "src/validation/user.schema"
 
@@ -8,9 +8,7 @@ import { TProductSchema } from "src/validation/user.schema"
 
 const getHomePage = async (req: Request, res: Response) => {
    const products = await getProduct();
-   const user = req.user;
-   // console.log(">>> check User: ", user)
-   // console.log(req.session)
+   console.log(req.user)
    res.render('client/home/show.ejs', {products})
 }
 
@@ -53,8 +51,10 @@ const getProductPage = async (req: Request, res: Response) =>{
    const id = req.params.id;
    const product = await getProductById(+id)
    const products = await getProduct() 
+   const quantity = await getQuantityByProductId(+id)
    const categories = ["APPLE", "DELL", "LENOVO", "ASUS", "LG", "ACER"]
    res.render("client/product/detail.ejs", {
+      quantity,
       product,
       products,
       categories

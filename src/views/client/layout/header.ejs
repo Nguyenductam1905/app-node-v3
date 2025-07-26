@@ -12,23 +12,22 @@
         <div class="container topbar bg-primary d-none d-lg-block">
             <div class="d-flex justify-content-between">
                 <div class="top-info ps-2">
-                    <%  if(user){ %>
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a
-                            href="#" class="text-white">
-                            <%= user?.address %>
-                        </a></small>
+                    <% if(user){ %>
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#"
+                                class="text-white">
+                                <%= user?.address %>
+                            </a></small>
                         <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#"
                                 class="text-white">
                                 <%= user?.username %>
                             </a></small>
 
-                        
-                    <%  } else { %>
-                        <small class="me-3"><a href="#"
-                                class="text-white">
-                                <i class="bi bi-voicemail text-secondary"></i>
-                        </a></small>
-                    <%  } %>
+
+                        <% } else { %>
+                            <small class="me-3"><a href="#" class="text-white">
+                                    <i class="bi bi-voicemail text-secondary"></i>
+                                </a></small>
+                            <% } %>
 
 
                 </div>
@@ -69,11 +68,13 @@
                             class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
                             data-bs-toggle="modal" data-bs-target="#searchModal"><i
                                 class="fas fa-search text-primary"></i></button>
-                        <a href="#" class="position-relative me-4 my-auto">
+                        <a href="/cart" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
                             <span
                                 class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+                                <%=user?.sumCart ?? 0%>
+                            </span>
                         </a>
                         <div class="dropdown my-auto">
                             <a href="#" class="dropdown" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
@@ -82,25 +83,32 @@
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-end p-4" aria-labelledby="dropdownMenuLink">
-                                <li class="d-flex align-items-center flex-column" style="min-width: 300px;">
-                                    <img style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden;"
-                                        src="/user_image/<%=user?.avatar%>" />
-                                    <div class="text-center my-3">
-                                        <%= user?.fullName %>
-                                    </div>
-                                </li>
 
-                                <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>
+                                <%if(user){%>
+                                    <li class="d-flex align-items-center flex-column" style="min-width: 300px;">
+                                        <img style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden;"
+                                            src="/user_image/<%=user?.avatar%>" />
+                                        <div class="text-center my-3">
+                                            <%= user?.fullName %>
+                                        </div>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>
 
-                                <li><a class="dropdown-item" href="/order-history">Lịch sử mua hàng</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <form method="post" action="/logout">
-                                        <button type="submit" class="dropdown-item">Đăng xuất</button>
-                                    </form>
-                                </li>
+                                    <li><a class="dropdown-item" href="/order-history">Lịch sử mua hàng</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <form method="post" action="/logout">
+                                            <button type="submit" class="dropdown-item">Đăng xuất</button>
+                                        </form>
+                                    </li>
+                                    <%} else {%>
+                                        <form method="get" action="/register">
+                                            <button type="submit" class="dropdown-item">Đăng kí</button>
+                                        </form>
+                                        <%}%>
+
                             </ul>
                         </div>
 

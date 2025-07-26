@@ -7,7 +7,7 @@ const getProduct = async () => {
 
 const getProductById = async (id: number) => {
     return await prisma.product.findUnique({
-        where: {id}
+        where: { id }
     })
 }
 
@@ -18,20 +18,20 @@ const addProductToCart = async (quantity: number, productId: number, user: Expre
         }
     })
     const product = await prisma.product.findUnique({
-        where: {id: productId}
+        where: { id: productId }
     })
 
-    if(cart){
+    if (cart) {
         //update
         await prisma.cart.update({
-            where: {id: cart.id},
+            where: { id: cart.id },
             data: {
                 //ham prisma tang theo so luong
                 sum: {
                     increment: quantity
                 },
                 userId: user.id,
-                
+
             }
         })
         //update + create to cartdetail
@@ -54,7 +54,7 @@ const addProductToCart = async (quantity: number, productId: number, user: Expre
                 product_id: productId
             }
         })
-    }else{
+    } else {
         //create
         await prisma.cart.create({
             data: {
@@ -74,6 +74,37 @@ const addProductToCart = async (quantity: number, productId: number, user: Expre
     }
 }
 
+const getCartUserInfoById = async (user: any) => {
+    console.log(user.id)
+    const cart = await prisma.cart.findMany({
+        where: {
+            userId:  user.id,
+        }
+    })
+    return cart
+}
+
+// [
+//   { id: 1, cart_id: 1, product_id: 1, quantity: 1, price: 17490000 },
+//   { id: 2, cart_id: 1, product_id: 2, quantity: 1, price: 15490000 }
+// ]
+
+const getProductByUserCart = async (cartDetail: any) => {
+    const products: Promise <any[]> = Promise.all((cartDetail).map(async (cart: any) : Promise<any> => {
+        return await prisma.product.findUnique({
+            where: {id: cart.id}
+        })
+    }))
+    return products
+}
+
+const getQuantityByProductId = async (id : number) => {
+    const cartDetail = await prisma.cartDetail.findUnique({
+        where: {id: id}
+    })
+    return cartDetail?.quantity
+}
+
 export {
-    getProduct, getProductById, addProductToCart
+    getProduct, getProductById, addProductToCart, getCartUserInfoById, getProductByUserCart, getQuantityByProductId
 }

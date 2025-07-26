@@ -3,7 +3,7 @@ import crypto from "crypto"; // Import thư viện crypto để mã hóa (hiện
 import { Strategy as LocalStrategy } from "passport-local"; // Import LocalStrategy từ passport-local, dùng để xác thực bằng tên người dùng/mật khẩu.
 import { prisma } from "config/client"; // Import đối tượng prisma client để tương tác với cơ sở dữ liệu.
 import { comparePassword, handleViewUser } from "services/user.services"; // Import hàm comparePassword từ user.services để so sánh mật khẩu đã nhập với mật khẩu trong DB.
-import { getUserWithRoleById } from "controllers/client/auth.controller";
+import { getCartDetail, getUserSumCart, getUserWithRoleById } from "controllers/client/auth.controller";
 
 
 const configPassportLocal = () => {
@@ -54,8 +54,9 @@ const configPassportLocal = () => {
             const {id, username} = user
             //truy van vao database
             const userInDB: any = await getUserWithRoleById(id)
-
-            return cb(null, {...userInDB});
+            const cart = await getUserSumCart(id)
+            const cartDetail = await getCartDetail(cart?.id ?? 0)
+            return cb(null, {...userInDB, sumCart: cart?.sum, cardId: cart?.id, cartDetail: cartDetail});
         });
     });
 }

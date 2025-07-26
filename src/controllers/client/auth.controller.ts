@@ -49,6 +49,21 @@ const getUserWithRoleById = async (id: string) => {
     return user
 }
 
+const getUserSumCart = async (id: string) => {
+    const user = await prisma.cart.findUnique({
+        where: {userId: +id},
+        //delete password
+    })
+    return user
+}
+
+const getCartDetail = async (cardId:number) => {
+    const productsId = await prisma.cartDetail.findMany({
+        where: {cart_id: cardId}
+    })
+    return productsId
+}
+
 const getSuccessRedirectPage = (req: Request, res: Response) => {
     const user = req.user as any;
     if (user?.role?.name === "ADMIN"){
@@ -64,4 +79,4 @@ const postLogout = (req: Request, res: Response, next: NextFunction) => {
     })
 }
 
-export {getRegisterPage, getLoginPage, postRegister, getUserWithRoleById, getSuccessRedirectPage, postLogout}
+export {getRegisterPage, getLoginPage, postRegister, getUserWithRoleById, getSuccessRedirectPage, postLogout, getUserSumCart, getCartDetail}
