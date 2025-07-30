@@ -77,13 +77,13 @@ const handleViewUser = async (id: any) => {
     // }
 }
 
-const handleUpdateUser = async (id: any, name: string, email: string, address: string, phone: string, role: any, avatar: string) => {
+const handleAdminUpdateUser = async (id: any, fullName: string, email: string, address: string, phone: string, role: any, avatar: string) => {
     await prisma.user.update({
         where: {
             id: id,
         },
         data: {
-            fullName: name,
+            fullName: fullName,
             // username: email,
             address: address,
             // password: defaultPassword,
@@ -107,4 +107,4 @@ const handleUpdateUser = async (id: any, name: string, email: string, address: s
 }
 
 
-export { handleCreateUser, getAllUsers, handleDeleteUser, handleViewUser, handleUpdateUser, getAllRoles, hashPassword, comparePassword }
+export { handleCreateUser, getAllUsers, handleDeleteUser, handleViewUser, handleAdminUpdateUser, getAllRoles, hashPassword, comparePassword }

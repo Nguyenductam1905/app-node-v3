@@ -98,6 +98,68 @@ const getProductByUserCart = async (cartDetail: any) => {
     return products
 }
 
+const deleteProductToCart = async (id: number, userId: number) => {
+    // Sử dụng transaction để đảm bảo tất cả các thao tác đều thành công hoặc rollback
+    return await prisma.$transaction(async (tx) => {
+        // Bước 1: Tìm chi tiết giỏ hàng (cartDetail) cần xóa
+        // Đồng thời kiểm tra xem nó có thực sự thuộc về người dùng (userId) này không
+        const cartDetailToDelete = await tx.cartDetail.findFirst({
+            where: {
+                id: id,          // ID của dòng sản phẩm trong giỏ hàng
+                cart: {
+                    userId: userId // Giỏ hàng phải thuộc về user này
+                }
+            },
+            include: {
+                cart: true // Lấy luôn thông tin giỏ hàng cha
+            }
+        });
+
+        // Nếu không tìm thấy, nghĩa là cartDetailId không hợp lệ hoặc không thuộc về user
+        if (!cartDetailToDelete) {
+            throw new Error("Sản phẩm trong giỏ hàng không tồn tại hoặc bạn không có quyền xóa.");
+        }
+        
+        const { cart, quantity, price } = cartDetailToDelete;
+        
+        // Bước 2: Cập nhật giỏ hàng chính (Cart)
+        // Trừ đi số lượng của sản phẩm sắp bị xóa
+        const updatedCart = await tx.cart.update({
+            where: {
+                id: cart.id
+            },
+            data: {
+                sum: {
+                    decrement: quantity
+                }
+                // Lưu ý: Nếu bạn có trường `totalPrice` trong Cart, hãy trừ nó ở đây
+                // totalPrice: {
+                //     decrement: quantity * price
+                // }
+            }
+        });
+
+        // Bước 3: Xóa bản ghi cartDetail
+        await tx.cartDetail.delete({
+            where: {
+                id: id
+            }
+        });
+
+        // Bước 4: Nếu giỏ hàng rỗng sau khi xóa (sum <= 0), thì xóa luôn giỏ hàng
+        if (updatedCart.sum <= 0) {
+            await tx.cart.delete({
+                where: {
+                    id: updatedCart.id
+                }
+            });
+        }
+        
+        // Trả về chi tiết sản phẩm đã xóa để xác nhận
+        return { message: "Đã xóa sản phẩm khỏi giỏ hàng thành công.", deletedItem: cartDetailToDelete };
+    });
+}
+
 const getQuantityByProductId = async (id : number) => {
     const cartDetail = await prisma.cartDetail.findUnique({
         where: {id: id}
@@ -106,5 +168,5 @@ const getQuantityByProductId = async (id : number) => {
 }
 
 export {
-    getProduct, getProductById, addProductToCart, getCartUserInfoById, getProductByUserCart, getQuantityByProductId
+    getProduct, getProductById, addProductToCart, getCartUserInfoById, getProductByUserCart, getQuantityByProductId, deleteProductToCart,
 }

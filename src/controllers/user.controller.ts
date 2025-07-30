@@ -1,14 +1,13 @@
 import { Request, Response } from "express"
 import { handleDeleteProduct, handleViewProduct } from "services/admin/product.service"
 import { getProduct, getProductById, getQuantityByProductId } from "services/client/item.service"
-import { handleCreateUser, handleDeleteUser, handleViewUser, handleUpdateUser, getAllRoles } from "services/user.services"
+import { handleCreateUser, handleDeleteUser, handleViewUser, handleAdminUpdateUser, getAllRoles } from "services/user.services"
 import { TProductSchema } from "src/validation/user.schema"
 
 
 
 const getHomePage = async (req: Request, res: Response) => {
    const products = await getProduct();
-   console.log(req.user)
    res.render('client/home/show.ejs', {products})
 }
 
@@ -43,7 +42,7 @@ const postUpdateUser = async (req: Request, res: Response) => {
    const avatar: string = req.file?.filename || ""
    // console.log(avatar);
    
-   await handleUpdateUser(+userId, name, email, address, phone, +role, avatar)
+   await handleAdminUpdateUser(+userId, name, email, address, phone, +role, avatar)
    res.redirect("/admin/user")
 }
 

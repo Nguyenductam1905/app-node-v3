@@ -52,7 +52,6 @@ const getUserWithRoleById = async (id: string) => {
 const getUserSumCart = async (id: string) => {
     const user = await prisma.cart.findUnique({
         where: {userId: +id},
-        //delete password
     })
     return user
 }

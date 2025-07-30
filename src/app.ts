@@ -11,6 +11,7 @@ import configPassportLocal from "./middleware/passport.local"
 import session from "express-session"
 import { PrismaSessionStore } from "@quixo3/prisma-session-store"
 import { PrismaClient } from "@prisma/client"
+import apiRoutes from "routes/api"
 const app = express()
 
 //Call env
@@ -60,6 +61,7 @@ console.log(path.resolve())
 initDatabase()
 //Route..
 webRoutes(app)
+apiRoutes(app)
 
 app.use(function(req,res){
     res.send("404 not found")

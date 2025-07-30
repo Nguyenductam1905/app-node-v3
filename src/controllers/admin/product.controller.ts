@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { createProduct, handleUpdateProduct, handleViewProduct } from "services/admin/product.service";
-import { addProductToCart, getCartUserInfoById, getProductByUserCart } from "services/client/item.service";
+import { createProduct, handleDeleteProduct, handleUpdateProduct, handleViewProduct } from "services/admin/product.service";
+import { addProductToCart, deleteProductToCart, getCartUserInfoById, getProductByUserCart } from "services/client/item.service";
 import { ProductSchema, TProductSchema } from "src/validation/user.schema";
 
 
@@ -86,18 +86,25 @@ const postAddProductToCart = async (req: Request, res: Response) => {
     return res.redirect("/");
 }
 
+const portDeleteProductCart = async (req: Request, res: Response) => {
+    const user = req.user as any
+    await deleteProductToCart(+req.params.id, user.id)
+    return res.redirect("/cart")
+}
+
 const getCartPage = async (req: Request, res: Response) => {
     const user = req.user as any;
     if(!user) return res.redirect("/login")
     //after query cart, get product detail from  userCart
     const products = await getProductByUserCart(user.cartDetail)
-    const prices = (products.map(product => product.price,[]))
+    const prices = (products.map(product => product?.price ?? 0 ,[]))
     let total_price = 0
+
     for(let i = 0; i < prices.length; i++){
         total_price += (prices[i] * user.cartDetail[i].quantity)
     }
-
+    console.log(user, products, total_price)
     return res.render("client/product/cart.ejs", {user, products, total_price})
 }
 
-export {getAdminCreateProduct, postAdminCreateProduct, postUpdateProduct, postAddProductToCart, getCartPage}
+export {getAdminCreateProduct, postAdminCreateProduct, postUpdateProduct, postAddProductToCart, getCartPage, portDeleteProductCart}
