@@ -1,9 +1,7 @@
-import { postUpdateUser } from "controllers/user.controller";
 import { Request, Response } from "express";
-import { handleGetAllUser, handleGetAllUserByID, handleUpdateUserById } from "services/client/api.service";
+import { handleGetAllUser, handleGetAllUserByID, handleUpdateUserById, handleUserLogin } from "services/client/api.service";
 import { registerNewUser } from "services/client/auth.service";
-import { addProductToCart } from "services/client/item.service";
-import { handleAdminUpdateUser, handleDeleteUser, hashPassword } from "services/user.services";
+import { handleDeleteUser, hashPassword } from "services/user.services";
 import { RegisterSchema, TRegisterSchema } from "src/validation/register.schema";
 
 const getAllUserAPI = async (req: Request, res: Response) => {
@@ -54,4 +52,20 @@ const deleteUserByIdAPI = async (req: Request, res: Response) => {
     })
 }
 
-export { getAllUserAPI, getAllUserAPIByID, createUserAPI,updateUserByIdAPI,deleteUserByIdAPI }
+const loginAPI = async (req: Request, res: Response) => {
+
+    const {username, password} = req.body;
+    try {
+        const access_token = await handleUserLogin(username, password)
+        res.status(200).json({
+            data: access_token
+        })
+    } catch (err) {
+        res.status(401).json({
+            data:null,
+            message: "invalid username/password"
+        })
+    }
+}
+
+export { getAllUserAPI, getAllUserAPIByID, createUserAPI,updateUserByIdAPI,deleteUserByIdAPI, loginAPI }
