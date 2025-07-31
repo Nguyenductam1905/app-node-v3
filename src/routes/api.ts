@@ -1,5 +1,5 @@
 import { postAddProductToCart } from "controllers/admin/product.controller";
-import { createUserAPI, getAllUserAPI, getAllUserAPIByID, updateUserByIdAPI } from "controllers/client/api.controller";
+import { createUserAPI, deleteUserByIdAPI, getAllUserAPI, getAllUserAPIByID, updateUserByIdAPI } from "controllers/client/api.controller";
 import express, {Express} from 'express'
 
 const router = express.Router();
@@ -13,7 +13,9 @@ const apiRoutes = (app: Express) => {
 
     router.post("/users", createUserAPI)
 
-    router.put("/users/:id", updateUserByIdAPI)
+    router.patch("/users/:id", updateUserByIdAPI)
+
+    router.delete("/users/:id", deleteUserByIdAPI)
 
     app.use("/api", router);
 

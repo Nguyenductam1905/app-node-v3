@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { handleGetAllUser, handleGetAllUserByID, handleUpdateUserById } from "services/client/api.service";
 import { registerNewUser } from "services/client/auth.service";
 import { addProductToCart } from "services/client/item.service";
-import { handleAdminUpdateUser, hashPassword } from "services/user.services";
+import { handleAdminUpdateUser, handleDeleteUser, hashPassword } from "services/user.services";
 import { RegisterSchema, TRegisterSchema } from "src/validation/register.schema";
 
 const getAllUserAPI = async (req: Request, res: Response) => {
@@ -46,4 +46,12 @@ const updateUserByIdAPI = async (req: Request, res: Response) => {
     })
 }
 
-export { getAllUserAPI, getAllUserAPIByID, createUserAPI,updateUserByIdAPI }
+const deleteUserByIdAPI = async (req: Request, res: Response) => {
+    const {id} = req.params
+    const users = await handleDeleteUser(+id)
+    res.status(200).json({
+        data: "Delete user successed"
+    })
+}
+
+export { getAllUserAPI, getAllUserAPIByID, createUserAPI,updateUserByIdAPI,deleteUserByIdAPI }
