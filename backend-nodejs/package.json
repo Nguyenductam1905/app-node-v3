@@ -1,0 +1,64 @@
+{
+  "name": "practice_v3",
+  "version": "1.0.0",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "tsc && node dist/app.js",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' -r tsconfig-paths/register src/app.ts",
+    "lint": "eslint 'src/**/*.ts'",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && tsc-alias"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nguyenductam1905/app-node-v3.git"
+  },
+  "keywords": [
+    "..."
+  ],
+  "author": "HorashiDev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nguyenductam1905/app-node-v3/issues"
+  },
+  "homepage": "https://github.com/Nguyenductam1905/app-node-v3#readme",
+  "description": "",
+  "devDependencies": {
+    "@prisma/client": "6.11.1",
+    "@types/bcrypt": "5.0.2",
+    "@types/cors": "2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/express-session": "1.18.1",
+    "@types/jsonwebtoken": "9.0.10",
+    "@types/node": "^24.0.10",
+    "@types/passport": "^1.0.17",
+    "@types/passport-local": "1.0.38",
+    "dotenv": "^17.0.0",
+    "eslint": "^9.30.0",
+    "express": "^5.1.0",
+    "install": "^0.13.0",
+    "nodemon": "^3.1.10",
+    "npm": "^11.4.2",
+    "prettier": "^3.6.2",
+    "prisma": "6.11.1",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "5.8.3"
+  },
+  "dependencies": {
+    "@quixo3/prisma-session-store": "3.1.13",
+    "@types/multer": "^2.0.0",
+    "bcrypt": "5.1.1",
+    "cors": "2.8.5",
+    "ejs": "^3.1.10",
+    "express-session": "1.18.1",
+    "jsonwebtoken": "9.0.2",
+    "multer": "^2.0.1",
+    "mysql2": "^3.14.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "uuid": "11.1.0",
+    "zod": "4.0.5"
+  }
+}
