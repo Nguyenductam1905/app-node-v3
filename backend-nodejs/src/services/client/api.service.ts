@@ -76,7 +76,10 @@ const handleUserLogin = async (username: string, password: string) => {
     // console.log(jwt.verify(access_token, process.env.JWT_SECRET as string))
     return access_token
 }
+const handleUserLogout = async (req: any, res: any) => {
 
+    res.redirect('/')
+}
 export {
     handleGetAllUser,
     handleGetAllUserByID,
